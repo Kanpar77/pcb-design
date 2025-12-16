@@ -218,13 +218,34 @@
   <section id="contact">
     <h2>Request a Free PCB Consultation</h2>
     <div class="contact">
-      <form onsubmit="handleSubmit(event)">
-        <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name" />
-        <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email" />
-        <textarea name="message" rows="4" placeholder="Describe your PCB project requirements" aria-label="Project Description"></textarea>
-        <button type="submit">Send via Email</button>
-        <a href="#" id="whatsappBtn" class="btn" style="margin-top:10px;display:block;text-align:center;background:#25D366;color:#fff;">Send via WhatsApp</a>
-        <div class="success" id="successMsg">Thank you! I will contact you within 24 hours.</div>
+  <form onsubmit="sendEmail(event)">
+    
+    <input type="text" id="name" placeholder="Your Name" required />
+    
+    <input type="email" id="email" placeholder="Your Email" required />
+    
+    <textarea id="message" rows="4"
+      placeholder="Describe your PCB project requirements"
+      required></textarea>
+
+    <!-- EMAIL BUTTON -->
+    <button type="submit">📧 Send via Email</button>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="#" onclick="sendWhatsApp()"
+       style="margin-top:10px;display:block;text-align:center;
+              background:#25D366;color:#fff;padding:12px;
+              text-decoration:none;border-radius:5px;">
+       💬 Send via WhatsApp
+    </a>
+
+    <div class="success" id="successMsg" style="display:none;margin-top:10px;">
+      Thank you! I will contact you within 24 hours.
+    </div>
+
+  </form>
+</div>
+
       </form>
     </div>
       </form>
@@ -243,6 +264,50 @@
     e.target.reset();
   }
 </script>
+<script>
+  function sendEmail(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const mailtoLink =
+      "mailto:usama32166@gmail.com" +
+      "?subject=PCB Design Inquiry" +
+      "&body=" +
+      "Name: " + name + "%0D%0A" +
+      "Email: " + email + "%0D%0A%0D%0A" +
+      "Project Details:%0D%0A" + message;
+
+    window.location.href = mailtoLink;
+
+    document.getElementById("successMsg").style.display = "block";
+  }
+
+  function sendWhatsApp() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    const whatsappNumber = "923177058896"; // ← REPLACE WITH YOUR NUMBER
+
+    const whatsappURL =
+      "https://wa.me/" + whatsappNumber +
+      "?text=" +
+      encodeURIComponent(
+        "PCB Design Inquiry\n\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n\n" +
+        "Project Details:\n" + message
+      );
+
+    window.open(whatsappURL, "_blank");
+
+    document.getElementById("successMsg").style.display = "block";
+  }
+</script>
 
 </body>
 </html>
+
